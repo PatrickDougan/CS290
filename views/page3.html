@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<title>Stock Page </title>
+<head>
+<link rel="stylesheet" type="text/css" href="./views/main.css">
+<div class="main_title">
+<h1>Stock Lookup</h1>
+</div>
+<style>
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #00ff55;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111;
+}
+</style>
+</head>
+<body>
+
+
+
+
+
+<ul>
+  <li><a href="/main.html">Home</a></li>
+  <li><a href="/page2.html">Stock List</a></li>
+  <li><a class="active" href="/page3.html">Lookup</a></li>
+  <li><a href="/page4.html">References</a></li>
+</ul>
+
+<p1 style="background-color:white">
+On this page you can search a ticker and get historical pricing.<br>Please note that due to API issues, data is from 2018.
+</p1>
+
+</body>
+
+<form onsubmit="get_data()">
+<label for="symbol">Ticker symbol:</label><br>
+<input type="text" id="symbol">
+<input type="submit" value="Lookup">
+</form>
+
+<table style="border: 1px solid black" id="mytable">
+
+</table>
+
+<br>
+<button onclick="exportTableToExcel('tblData', symbol.value+' data')">Export Table Data To Excel File</button>
+
+<script>
+
+
+function exportTableToExcel(tableID, filename = ''){
+    var downloadLink;
+    var dataType = 'application/vnd.ms-excel';
+    var tableSelect = document.getElementById("mytable");
+    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+    
+    // Specify file name
+    filename = filename?filename+'.xls':'excel_data.xls';
+    
+    // Create download link element
+    downloadLink = document.createElement("a");
+    
+    document.body.appendChild(downloadLink);
+    
+    if(navigator.msSaveOrOpenBlob){
+        var blob = new Blob(['\ufeff', tableHTML], {
+            type: dataType
+        });
+        navigator.msSaveOrOpenBlob( blob, filename);
+    }else{
+        // Create a link to the file
+        downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+    
+        // Setting the file name
+        downloadLink.download = filename;
+        
+        //triggering the function
+        downloadLink.click();
+    }
+}
+
+
+function get_data(){
+	var req = new XMLHttpRequest();
+	req.open("GET", "https://www.quandl.com/api/v3/datasets/WIKI/"+symbol.value+"/data.json?api_key=gHBUkwsphBqCmmS9CMLW&start_date=2018-03-27&end_date=2018-03-27", true);
+	
+	req.onload = function(){
+		if(req.status >= 200 && req.status < 400){
+		console.log("success");
+		table_it(JSON.parse(req.responseText));
+		} else {
+		console.log("error in network request " + request.statusText);
+		}};
+	req.send(null);
+	event.preventDefault();
+}
+
+
+function table_it(data)
+{
+	let head = Object.keys[data.dataset_data.column_names[0]];
+	var table = document.getElementById("mytable");
+	let thead = table.createTHead();
+	let row = thead.insertRow();
+	for (x = 0; x < 13; x++){
+		let th = document.createElement("th");
+		let text = document.createTextNode(data.dataset_data.column_names[x]);
+		th.appendChild(text);
+		row.appendChild(th);
+}
+	for (x = 0; x < 1; x++) {
+		let row = table.insertRow();
+		for (y = 0; y < 13; y++){
+			let cell = row.insertCell();
+			let text = document.createTextNode(data.dataset_data.data[0][y]);
+			cell.appendChild(text);
+		}
+	}
+}
+
+
+
+
+
+/*
+function get_data(){
+
+
+if(symbol.value != 0){
+	window.open("https://www.quandl.com/EOD/"+symbol.value);
+	}
+
+}*/
+</script>
+
+
+</html>
+
+

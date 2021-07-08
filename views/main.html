@@ -1,0 +1,172 @@
+	<!DOCTYPE html>
+	<html>
+
+	<title>Stock Page</title>
+
+	<head>
+	<link rel="stylesheet" type="text/css" href="./views/main.css">
+	<div class="main_title">
+	<H1>Stock Market Page!</H1>
+	</div>
+	<style>
+	ul {
+	  list-style-type: none;
+	  margin: 0;
+	  padding: 0;
+	  overflow: hidden;
+	  background-color: #00ff55;
+	  font-size: 40;
+	}
+
+	li {
+	  float: left;
+	}
+
+	li a {
+	  display: block;
+	  color: black;
+	  text-align: center;
+	  padding: 14px 16px;
+	  text-decoration: none;
+	  
+	}
+
+	li a:hover {
+	  background-color: #111;
+	}
+	p1 {
+		background-color: white;
+		text-align: center;
+	}
+	</style>
+	</head>
+	<body>
+
+	<ul>
+	  <li><a class="active" href="/main.html">Home</a></li>
+	  <li><a href="/page2.html">Stock List</a></li>
+	  <li><a href="/page3.html">Lookup</a></li>
+	  <li><a href="/page4.html">References</a></li>
+	</ul>
+
+
+<div class="paragraph">
+	<p1>This website has been developed to give some basic ideas about stocks. The Home page has a brief video
+		about the history of stocks and general overview about how stocks are traded today. The stock lists has
+		500 names of stocks as well as general information on the companies. The Lookup page allows you to search details
+		on a specific ticker symbol. The final page contains additional information and resources to continue learning!
+	</p1>
+</div>
+
+	<div class="slideshow-container">
+
+	  <div class="mySlides fade">
+		<div class="numbertext">1 / 3</div>
+		<p style="text-align:center"><img src="./pic1.jpg"></p>
+		<div class="text">Stocks</div>
+	  </div>
+
+	  <div class="mySlides fade">
+		<div class="numbertext">2 / 3</div>
+		<p style="text-align:center"><img src="./pic2.jpg"></p>
+		<div class="text">ETFs</div>
+	  </div>
+
+	  <div class="mySlides fade">
+		<div class="numbertext">3 / 3</div>
+		<p style="text-align:center"><img src="./pic3.jpg"></p>
+		<div class="text">Bonds</div>
+	  </div>
+
+
+	  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+	  <a class="next" onclick="plusSlides(1)">&#10095;</a>
+	  
+	</div>
+	<br>
+	<div style="text-align:center">
+	  <span class="dot" onclick="currentSlide(1)"></span>
+	  <span class="dot" onclick="currentSlide(2)"></span>
+	  <span class="dot" onclick="currentSlide(3)"></span>
+	</div>
+
+
+
+	<p align="center"><iframe width="1000" height="700"
+	src="https://www.youtube.com/embed/p7HKvqRI_Bo">
+	</iframe></p>
+
+
+
+	<script>
+	var slideIndex = 1;
+	showSlides(slideIndex);
+
+	// Next/previous controls
+	function plusSlides(n) {
+		//console.log(n);
+	  showSlides(slideIndex += n);
+	}
+
+	// Thumbnail image controls
+	function currentSlide(n) {
+	  showSlides(slideIndex = n);
+	}
+
+	function showSlides(n) {
+	  var i;
+	  var slides = document.getElementsByClassName("mySlides");
+	  var dots = document.getElementsByClassName("dot");
+	  if (n > slides.length) {slideIndex = 1}
+	  if (n < 1) {slideIndex = slides.length}
+	  for (i = 0; i < slides.length; i++) {
+		  slides[i].style.display = "none";
+	  }
+	  for (i = 0; i < dots.length; i++) {
+		  dots[i].className = dots[i].className.replace(" active", "");
+	  }
+	  slides[slideIndex-1].style.display = "block";
+	  dots[slideIndex-1].className += " active";
+	}
+
+	var slideIndex = 0;
+	slideShow();
+
+	function slideShow() {
+	  var i;
+	  var slides = document.getElementsByClassName("mySlides");
+		var dots = document.getElementsByClassName("dot");
+	  for (i = 0; i < slides.length; i++) {
+		slides[i].style.display = "none";
+	  }
+		for(i = 0; i < dots.length; i++){
+			dots[i].className = dots[i].className.replace(" active", "");
+		}
+	 slideIndex++;
+	  if (slideIndex > slides.length) {slideIndex = 1}
+	  slides[slideIndex-1].style.display = "block";
+	  dots[slideIndex-1].className += " active";
+	  setTimeout(slideShow, 5000); // Change image every 2 seconds
+	}	
+
+	</script>
+
+	</body>
+	</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
